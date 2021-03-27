@@ -18,6 +18,7 @@ public class CPUManager implements Runnable {
 		try {
 			for (long i = 0; i < 1000; i += 100) {
 				if (CPUManagerQueue.isEmpty()) {
+					System.out.println("No process in CPUManager");
 					return;
 				}
 				Process p = CPUManagerQueue.peek();
@@ -28,6 +29,7 @@ public class CPUManager implements Runnable {
 					p.CPURemaining = 0;
 					p.CPUFinishTime = Clock.timer + i * 100;
 					Controller.storeAllCPUManagerRelatedInfo(p);
+					totalProcessInCPUManager -= 1;
 				} else {
 					p.CPURemaining -= 100;
 					CPUManagerQueue.add(p);
@@ -35,9 +37,9 @@ public class CPUManager implements Runnable {
 				Thread.sleep(50);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.println(e);
 		}
+		System.out.println("Number of process in CPUManager: " + totalProcessInCPUManager);
 	}
 
 	public void run() {

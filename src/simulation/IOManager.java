@@ -14,6 +14,7 @@ public class IOManager {
 
 	public void runIOManagerFor1Second() {
 		// First check if there is process in IOManager Or not
+		System.out.println("----IOManager----");
 		if (IOManagerQueue.isEmpty()) {
 			System.out.println("No process in IOManager");
 			return;
@@ -26,7 +27,6 @@ public class IOManager {
 			if (!p.IOStart) {
 
 				System.out.println("Process " + p.pid + ": starts executing in IOManager");
-				System.out.println("Number of process in IOManager: " + totalProcessInIOManager);
 
 				p.IOStartTime = Clock.timer;
 				// IOTime will increased by 5% with increase in totalProcessINIOManager as per
@@ -63,19 +63,19 @@ public class IOManager {
 							+ nextProcess.IOTime * 5 / 100 * (totalProcessInIOManager - 1);
 					nextProcess.IORemaining = nextProcess.IOTime;
 
-					System.out.println("Process " + p.pid + ": starts executing in IOManager");
-					System.out.println("Number of process in IOManager: " + totalProcessInIOManager);
+					System.out.println("Process " + nextProcess.pid + ": starts executing in IOManager");
+
 				}
 			} else {
 				p.IORemaining -= 1000;
 				System.out.println("Process " + p.pid + " is currently executing in IOManager. IO time remains: "
 						+ p.IORemaining + "ms");
 				Thread.sleep(1000);
-				return;
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		System.out.println("Number of process in IOManager: " + totalProcessInIOManager);
 	}
 
 }

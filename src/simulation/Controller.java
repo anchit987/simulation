@@ -3,7 +3,6 @@ package simulation;
 import java.util.*;
 
 public class Controller {
-
 	static int totalProcessesAdded = 0;
 	static boolean noMoreInputs = false;
 	static long processRate = 3000; // In milliseconds
@@ -36,7 +35,7 @@ public class Controller {
 
 				process.totalIOWastageTime = p.IOStartTime - p.entryTime;
 				process.totalWastageTime = p.totalIOWastageTime + p.totalCPUWastageTime;
-				break;
+				return;
 			}
 		}
 	}
@@ -58,7 +57,7 @@ public class Controller {
 
 				process.totalCPUWastageTime = p.CPUStartTime - p.entryTime;
 				process.totalWastageTime = p.totalIOWastageTime + p.totalCPUWastageTime;
-				break;
+				return;
 			}
 		}
 	}
@@ -148,5 +147,4 @@ public class Controller {
 		// ON COMPLETED CLOSING SCANNER STREAM
 		input.close();
 	}
-
 }
