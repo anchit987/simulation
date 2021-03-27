@@ -36,7 +36,7 @@ public class CPUManager implements Runnable {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-
+			System.out.println(e);
 		}
 	}
 

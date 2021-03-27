@@ -108,7 +108,7 @@ public class Controller {
 
 					if (autoInputs) {
 						iopercentage = rand.nextInt(101);
-						burstTime = rand.nextInt(8000) + 2000;
+						burstTime = rand.nextInt(6000) + 4000;
 						iopercentage = iopercentage - iopercentage % 10;
 						burstTime = burstTime - burstTime % 100;
 						System.out.println("Enter IOPercentage: " + iopercentage);
