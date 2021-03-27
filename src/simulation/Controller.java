@@ -63,6 +63,19 @@ public class Controller {
 		}
 	}
 
+	// public static void printingAllProcessInformation() {
+	// for (Process p : processes) {
+	// System.out.println("----*----");
+	// System.out.println("Process " + p.pid);
+	// System.out.println("Entry Time: " + p.entryTime);
+	// System.out.println("Exit Time: " + p.entryTime);
+	// System.out.println("Total waiting time in CPUManager: " +
+	// p.totalCPUWastageTime);
+	// System.out.println("Total waiting time in IOManager: " +
+	// p.totalIOWastageTime);
+	// }
+	// }
+
 	public static void main(String[] args) {
 
 		IOManager IO = new IOManager();
@@ -71,6 +84,14 @@ public class Controller {
 		ProcessCreator creator = new ProcessCreator();
 
 		Scanner input = new Scanner(System.in);
+		Random rand = new Random();
+
+		boolean autoInputs = false;
+		String s;
+		System.out.print("DO YOU WANT AUTO INPUTS (y/n): ");
+		s = input.nextLine();
+		if (s.equals("y"))
+			autoInputs = true;
 
 		// This for loop is like clock which showing output and input process of
 		// CPU in every second and generating outputs regarding It
@@ -84,10 +105,21 @@ public class Controller {
 				if (currentTime % processRate == 0 && !noMoreInputs) {
 					// Input Process And get Process from processCreator
 					long iopercentage, burstTime;
-					System.out.print("Enter IOPercentage: ");
-					iopercentage = input.nextLong();
-					System.out.print("Enter Burst Time: ");
-					burstTime = input.nextLong();
+
+					if (autoInputs) {
+						iopercentage = rand.nextInt(101);
+						burstTime = rand.nextInt(8000) + 2000;
+						iopercentage = iopercentage - iopercentage % 10;
+						burstTime = burstTime - burstTime % 100;
+						System.out.println("Enter IOPercentage: " + iopercentage);
+						System.out.println("Enter Burst Time: " + burstTime);
+					} else {
+						System.out.print("Enter IOPercentage: ");
+						iopercentage = input.nextLong();
+						System.out.print("Enter Burst Time: ");
+						burstTime = input.nextLong();
+					}
+
 					Process p = creator.createProcess(iopercentage, burstTime);
 
 					// Adding Process to both the queue
@@ -112,7 +144,7 @@ public class Controller {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
+		System.out.println("SIMULATION ENDED");
 		// ON COMPLETED CLOSING SCANNER STREAM
 		input.close();
 	}
