@@ -5,12 +5,11 @@ import java.util.*;
 public class Controller {
 	static int totalProcessesAdded = 0;
 	static boolean noMoreInputs = false;
-	static long processRate = 3000; // In milliseconds
 
 	public static boolean isEmptyQueues(IOManager IO, CPUManager CPU) {
 		// It will return true whenever there will be some process in
 		// either of IOManager and CPUManager
-		return !IO.IOManagerList.isEmpty() || !CPU.CPUManagerQueue.isEmpty();
+		return !IO.IOManagerQueue.isEmpty() || !CPU.CPUManagerQueue.isEmpty();
 	}
 
 	public static void main(String[] args) {
@@ -24,31 +23,38 @@ public class Controller {
 		Random rand = new Random();
 
 		boolean autoInputs = false;
+		long numberOfProcess;
 		String s;
+		System.out.println("Processes will be input for 5 minutes and after there is no");
+		System.out.println("process in CPUManager and IOManager the simulation will be stop.");
+		System.out.println("******************************************");
+		System.out.println();
+		System.out.println("SIMULATION STARTED");
+		System.out.println("Process Rate is(generated randomly): " + ProcessCreator.processRate);
+
 		System.out.print("DO YOU WANT AUTO INPUTS (y/n): ");
 		s = input.nextLine();
 		if (s.equals("y"))
-			autoInputs = true;
-
+		autoInputs = true;
+		
+		System.out.print("Enter number of processes: ");
+		numberOfProcess = input.nextInt();
 		// This for loop is like clock which showing output and input process of
 		// CPU in every second and generating outputs regarding It
 
 		// After one minute there will be no input
 		try {
-			for (double currentTime = 0; currentTime < 30000 || isEmptyQueues(IO, CPU)
-					|| !noMoreInputs; currentTime += 1000) {
+			for (double currentTime = 0; isEmptyQueues(IO, CPU) || !noMoreInputs; currentTime += 1000) {
 				System.out.println("-----*-----");
 				System.out.println("CLOCK: " + Clock.timer / 1000 + "sec");
-				// In every three Second I have to take Input
-				if (currentTime % processRate == 0 && !noMoreInputs) {
+				// In every three second it will take Input
+				if (currentTime % ProcessCreator.processRate == 0 && !noMoreInputs) {
+					// Input Process And get Process from processCreator
 					long iopercentage, burstTime;
 
-					// Input Process And get Process from processCreator
-					// Inputs for creating process
 					if (autoInputs) {
 						iopercentage = rand.nextInt(101);
-						// Range of burst time is 3 - 8 seconds
-						burstTime = rand.nextInt(8001) + 3000;
+						burstTime = rand.nextInt(6000) + 4000;
 						iopercentage = iopercentage - iopercentage % 10;
 						burstTime = burstTime - burstTime % 100;
 						System.out.println("Enter IOPercentage: " + iopercentage);
@@ -71,10 +77,8 @@ public class Controller {
 				CPU.runCPUManagerFor1Second();
 				IO.runIOManagerFor1Second();
 
-				// noMoreInputs will become true after adding processes
-				// for one minutes and after that only CPUManager and IOManager
-				// processing will be done
-				if (totalProcessesAdded == 10)
+				// input = 100 process in 5 minutes at the rate of 1 process / second
+				if (totalProcessesAdded == numberOfProcess)
 					noMoreInputs = true;
 
 				// Increasing time of clock
