@@ -5,6 +5,7 @@ run the Controller file
 and give IOPercentage between 10 - 100
 and give Burst Time between 4000 - 10000 (it is in milli second)
 
+THIS SAMPLE OUTPUT IS IN "add auto inputs options" COMMIT
 SAMPLE OUTPUTS
 
 ![1](https://user-images.githubusercontent.com/60397973/112711594-a31f5680-8eef-11eb-88c9-f452e431d218.PNG)
