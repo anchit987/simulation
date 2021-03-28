@@ -28,7 +28,6 @@ public class CPUManager implements Runnable {
 					// CPURemaining will always be in multiple of 100
 					p.CPURemaining = 0;
 					p.CPUFinishTime = Clock.timer + i * 100;
-					Controller.storeAllCPUManagerRelatedInfo(p);
 					totalProcessInCPUManager -= 1;
 				} else {
 					p.CPURemaining -= 100;
